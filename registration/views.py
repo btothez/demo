@@ -1,18 +1,14 @@
 from django.contrib.auth import login, authenticate, logout
 from django.db import transaction
 
-# from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm
-# from .forms import UserForm, ProfileForm
 
-# Create your views here.
 from django.http import HttpResponse
 from django.template import loader
-# from .models import Profile
-
 
 import sys
+
 def logout_request(request):
     user = request.user
     logout(request)
