@@ -2,9 +2,10 @@
 Django User Registration Demo
 =================
 
-Simply clone this repository and run 
+Simply clone this repository,  and run 
 
-python manage.py runserver 8000
+    python manage.py migrate
+    python manage.py runserver 8000
 
 from the command line.
 
