@@ -1,64 +1,13 @@
 {% extends 'registration/base.html' %}
 
 {% block content %}
-
-    <form action="{% url 'register' %}" method="post">
-        {% csrf_token %}
-        <div class="container">
-
-            <div class="row">
-                <div class="col-md-6 col-md-offset-4" style="margin-top: 20px;">
-                    <h1>Sign Up Form</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" name="email" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="col-md-2">
-                    &nbsp;
-                </div>
-                <div class="col-md-4">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" 
-                           id="password" name="password" placeholder="Password">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>First Name</label>
-                    <input type="text" class="form-control" 
-                           id="first_name" name="first_name" placeholder="First Name">
-                </div>
-                <div class="col-md-2">
-                    &nbsp;
-                </div>
-                <div class="col-md-4 col-md-offset-4">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" id="last_name" 
-                           name="last_name" placeholder="Last Name">
-                </div>
-            </div>
-            <div class="row"
-                 style="margin-top:40px;">
-                <div class="col-md-12">
-                    <h3>Personal Information</h3>
-                </div>
-                <div class="col-md-10">
-                    <label for="exampleTextarea">Tell us about yourself</label>
-                    <textarea class="form-control" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                <input type="submit" 
-                       class="btn btn-lg btn-primary" 
-                       style="margin-top: 20px;"
-                       value="Join" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 20px;">
+                <h1>Hello {{ full_name }}, welcome to the site</h1>   
+                <p>While here, enjoy a talk that I gave a while back about some Machine Learning topics</p>
+                <p><iframe width="560" height="315" src="https://www.youtube.com/embed/iy18uBvVnhI?start=282" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></p>
             </div>
         </div>
-    </form>
-
+    </div>
 {% endblock %}
