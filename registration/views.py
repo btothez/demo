@@ -14,6 +14,9 @@ def logout_request(request):
     logout(request)
     return redirect('register')
 
+def login_request(request):
+    return render(request, 'registration/register.html', {'form': form})
+
 def index(request):
     user = request.user
     full_name = ''

@@ -1,5 +1,9 @@
 {% block content %}
-{% if form.errors %}
+{% if form.non_field_errors %}
+	<div class="alert alert-dismissible alert-danger">
+		<h4 class="alert-heading">{{ form.non_field_errors }}</h4>
+	</div>
+{% elif form.errors %}
 	<div class="alert alert-dismissible alert-danger">
 		<h4 class="alert-heading">Error submitting</h4>
 	</div>
