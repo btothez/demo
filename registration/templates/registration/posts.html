@@ -131,7 +131,7 @@
             // If no thread chosen, and new thread added, but no category selected, and
             // no new category added
             if ((thread.length == 0) && (new_thread.length > 0) && (category.length == 0) && (new_category.length == 0)) {
-                $('#category-error').html('Please select a category or add a new one for your new thread');
+                $('#category-error').html('Please select a category or add a new one for your new thread').show();
                 errors = true;
             }
 
