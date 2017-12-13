@@ -1,0 +1,122 @@
+{% extends 'registration/base.html' %}
+
+{% block content %}
+    <form id="post_form" action="{% url 'posts' %}" method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row" style="margin-top: 20px;">
+            	<div class="col-md-10 offset-1">
+                    <label>Post Title</label>
+                    <p id="title-error" style="color:red;display:none;"></p>
+                    <input type="text" id="title" class="form-control" 
+                           name="title" placeholder="Title">
+            	</div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-4 offset-1">
+                    <label>Thread</label>
+                    <p id="thread-error" style="color:red;display:none;"></p>
+                    <select id="thread" name="thread" class="form-control">
+                        <option value="">---------</option>
+                        {% for thread in threads %}
+                        <option value="{{ thread.id }}">{{ thread.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">&nbsp;</div> 
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <input type="text" class="form-control" id="new-thread"
+                           name="new_thread" placeholder="New Thread Name">
+                </div>
+            </div>
+            <div id="category-section" class="row" style="margin-top: 20px; display: none;">
+                <div class="col-md-4 offset-1">
+                    <label>Category</label>
+                    <p id="category-error" style="color:red;display:none;"></p>
+                    <select id="category" name="category" class="form-control">
+                        <option value="">---------</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.tag }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">&nbsp;</div> 
+                <div class="col-md-4">
+                    <label>&nbsp;</label>
+                    <input type="text" class="form-control" id="new-category"
+                           name="new_category" placeholder="New Category Tag">
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-10 offset-1">
+                    <label>Post Text</label>
+                    <p id="body-error" style="color:red;display:none;"></p>
+                    <textarea name="body" id="body" class="form-control" rows="8"></textarea>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-8 offset-1">&nbsp;</div>
+                <div class="col-md-2">
+                    <button id="submit-button" 
+                            class="form-control btn-lg btn-success">
+                            Post
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#new-thread').keypress(function(e) {
+            $('#category-section').show();
+        });
+
+        $('#submit-button').on('click', function(e) {
+            e.preventDefault();
+
+            var errors = false;
+            $('p').hide();
+
+            // Title
+            var title = $('#title').val();
+            if (title.length == 0) {
+                $('#title-error').html('Please enter a title for your post').show();
+                errors = true;
+            }
+            // Body
+            var body = $('#body').val();
+            if (body.length == 0) {
+                $('#body-error').html('Please text a title for your post').show();
+                errors = true;
+            }
+
+            var thread = $('#thread').val();
+            var category = $('#category').val();
+            var new_thread = $('#new-thread').val();
+            var new_category = $('#new-category').val();
+
+            // If no thread chosen, and no new thread
+            if ((thread.length == 0) && (new_thread.length == 0)) {
+                $('#thread-error').html('Please select an existing thread or enter a name for a new one').show();
+                errors = true;
+            }
+            // If no thread chosen, and new thread added, but no category selected, and
+            // no new category added
+            if ((thread.length == 0) && (new_thread.length > 0) && (category.length == 0) && (new_category.length == 0)) {
+                $('#category-error').html('Please select a category or add a new one for your new thread');
+                errors = true;
+            }
+
+            if (errors) {
+                return false; 
+            } else {
+                $('#post_form').submit();
+            }
+        });
+    });
+</script>
+{% endblock %}
