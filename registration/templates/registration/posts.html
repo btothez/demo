@@ -7,15 +7,20 @@
             <div class="row" style="margin-top: 20px;">
             	<div class="col-md-10 offset-1">
                     <label>Post Title</label>
-                    <p id="title-error" style="color:red;display:none;"></p>
+                    <p id="title-error" class="error-text" style="color:red;display:none;"></p>
                     <input type="text" id="title" class="form-control" 
                            name="title" placeholder="Title">
             	</div>
             </div>
             <div class="row" style="margin-top: 20px;">
+                <div class="col-md-10 offset-1">
+                    <p class="text-primary">Either choose an existing thread, or create a new one</p>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-md-4 offset-1">
                     <label>Thread</label>
-                    <p id="thread-error" style="color:red;display:none;"></p>
+                    <p id="thread-error" class="error-text" style="color:red;display:none;"></p>
                     <select id="thread" name="thread" class="form-control">
                         <option value="">---------</option>
                         {% for thread in threads %}
@@ -31,9 +36,12 @@
                 </div>
             </div>
             <div id="category-section" class="row" style="margin-top: 20px; display: none;">
+                <div class="col-md-11 offset-1">
+                    <p>If creating a new thread, either choose an existing category or create a new one</p>
+                </div>
                 <div class="col-md-4 offset-1">
                     <label>Category</label>
-                    <p id="category-error" style="color:red;display:none;"></p>
+                    <p id="category-error" class="error-text" style="color:red;display:none;"></p>
                     <select id="category" name="category" class="form-control">
                         <option value="">---------</option>
                         {% for category in categories %}
@@ -51,7 +59,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-md-10 offset-1">
                     <label>Post Text</label>
-                    <p id="body-error" style="color:red;display:none;"></p>
+                    <p id="body-error" class="error-text" style="color:red;display:none;"></p>
                     <textarea name="body" id="body" class="form-control" rows="8"></textarea>
                 </div>
             </div>
@@ -73,13 +81,29 @@
     $(document).ready(function() {
         $('#new-thread').keypress(function(e) {
             $('#category-section').show();
+            $('#thread').val('');
+        });
+
+        $('#thread').on('change', function(e) {
+            $('#new-thread').val('');
+            if ($('#thread').val().length != 0) {
+                $('#category-section').hide();
+            }
+        });
+
+        $('#new-category').keypress(function(e) {
+            $('#category').val('');
+        });
+
+        $('#thread').on('change', function(e) {
+            $('#new-category').val('');
         });
 
         $('#submit-button').on('click', function(e) {
             e.preventDefault();
 
             var errors = false;
-            $('p').hide();
+            $('p.error-text').hide();
 
             // Title
             var title = $('#title').val();

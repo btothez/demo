@@ -23,9 +23,6 @@ def login_request(request):
 
 def index(request):
     user = request.user
-    full_name = ''
-    full_name = "{} {}".format(user.first_name, user.last_name)
-    full_name = full_name.title()
     context = {
         'threads': Thread.objects.all(),
         'user': user
