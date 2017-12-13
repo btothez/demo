@@ -24,12 +24,13 @@ def login_request(request):
 def index(request):
     user = request.user
     full_name = ''
-    if not user.is_authenticated:
-        return redirect('register')
     full_name = "{} {}".format(user.first_name, user.last_name)
     full_name = full_name.title()
-    return render(request, 'registration/index.html', {'user': user, 
-                                                       'full_name': full_name})
+    context = {
+        'threads': Thread.objects.all(),
+        'user': user
+    }
+    return render(request, 'registration/index.html', context)
 
 def register(request):
     if request.method == 'POST':
@@ -83,7 +84,9 @@ def posts(request):
         pst = Post(title=title, body=body, thread=thr)
         pst.save()
         pst.user.add(request.user)
-
+        pst.save()
+        print(request.user)
+        print(request.user.username)
         return redirect('index')
     else:
         form = PostForm()
@@ -95,3 +98,20 @@ def posts(request):
             'categories': categories
         }
         return render(request, 'registration/posts.html', context)
+
+def thread(request, thread_id):
+    thread = Thread.objects.get(id=thread_id)
+    context = {
+        'thread': thread,
+        'posts': thread.post_set.all(),
+        'user': request.user
+    }
+    return render(request, 'registration/thread.html', context)
+
+@login_required
+def delete_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    thread = post.thread
+    if post.user.first().id == request.user.id:
+        post.delete()
+    return redirect("/thread/{}".format(thread.id))

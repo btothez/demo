@@ -3,10 +3,26 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-12" style="margin-top: 20px;">
-                <h1>Hello {{ full_name }}, welcome to the site</h1>   
-                <p>While here, enjoy a talk that I gave a while back about some Machine Learning topics</p>
-                <p><iframe width="560" height="315" src="https://www.youtube.com/embed/iy18uBvVnhI?start=282" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe></p>
+            <div class="col-md-10 offset-1" style="margin-top: 20px;">
+                <h1>Threads</h1>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Thread Name</th>
+                            <th scope="col">Category</th>
+                            <th scope="col"># Posts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for thread in threads %}
+                        <tr class="table-active">
+                        <th scope="row"><a href="/thread/{{thread.id}}">{{ thread.name }}</a></th>
+                            <td>{{ thread.category.tag }}</td>
+                            <td>{{ thread.post_set.all.count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
